@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -9,9 +9,20 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    if (user) {
+      const role = user.role || 'employee';
+      if (role === 'admin' || role === 'accountant') {
+        navigate('/admin');
+      } else {
+        navigate('/employee');
+      }
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,17 +30,9 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const res = await login(username, password);
-      // Navigate based on user role
-      const role = res?.user?.role || 'employee';
-      if (role === 'admin' || role === 'accountant') {
-        navigate('/admin');
-      } else {
-        navigate('/employee');
-      }
+      await login(username, password);
     } catch (err: any) {
       setError(err.response?.data?.error || 'خطا در ورود');
-    } finally {
       setIsLoading(false);
     }
   };

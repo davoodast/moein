@@ -13,8 +13,6 @@ export interface GregorianDate {
   day: number;
 }
 
-const EPOCH = 1948440.5;
-
 function div(a: number, b: number): number {
   return Math.floor(a / b);
 }

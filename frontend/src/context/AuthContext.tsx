@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import type { ReactNode, FC } from 'react';
+import type { ReactNode } from 'react';
 import type { User, AuthContextType } from '../types';
 import { authService } from '../services/authService';
 
@@ -25,13 +25,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [token]);
 
-  const login = async (username: string, password: string) => {
+  const login = async (username: string, password: string): Promise<void> => {
     const data = await authService.login(username, password);
     const newToken = data.token;
     localStorage.setItem('token', newToken);
     setToken(newToken);
     setUser(data.user);
-    return data;
   };
 
   const logout = () => {

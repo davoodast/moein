@@ -55,12 +55,12 @@ export default function JalaliDatePicker({ value, onChange, placeholder = 'ان�
   }
 
   function prevMonth() {
-    if (curMonth === 1) { setCurMonth(12); setCurYear(y => y - 1); }
-    else setCurMonth(m => m - 1);
+    if (curMonth === 1) { setCurMonth(12); setCurYear((y: number) => y - 1); }
+    else setCurMonth((m: number) => m - 1);
   }
   function nextMonth() {
-    if (curMonth === 12) { setCurMonth(1); setCurYear(y => y + 1); }
-    else setCurMonth(m => m + 1);
+    if (curMonth === 12) { setCurMonth(1); setCurYear((y: number) => y + 1); }
+    else setCurMonth((m: number) => m + 1);
   }
 
   const selParts = value ? value.split('/') : [];

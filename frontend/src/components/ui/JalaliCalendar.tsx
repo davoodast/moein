@@ -42,12 +42,12 @@ export default function JalaliCalendar({ events, onDayClick }: Props) {
   const firstDow = jDayOfWeek(year, month, 1);
 
   function prevMonth() {
-    if (month === 1) { setMonth(12); setYear(y => y - 1); }
-    else setMonth(m => m - 1);
+    if (month === 1) { setMonth(12); setYear((y: number) => y - 1); }
+    else setMonth((m: number) => m - 1);
   }
   function nextMonth() {
-    if (month === 12) { setMonth(1); setYear(y => y + 1); }
-    else setMonth(m => m + 1);
+    if (month === 12) { setMonth(1); setYear((y: number) => y + 1); }
+    else setMonth((m: number) => m + 1);
   }
 
   function eventsOnDay(d: number): CeremonyEvent[] {

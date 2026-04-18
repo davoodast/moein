@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BarChart3, Calendar, Users, CreditCard, TrendingUp } from 'lucide-react';
+import { BarChart3, Calendar, CreditCard, TrendingUp } from 'lucide-react';
 import CeremoniesManagement from '../components/admin/CeremoniesManagement';
 import EmployeesManagement from '../components/admin/EmployeesManagement';
 import PlansManagement from '../components/admin/PlansManagement';
