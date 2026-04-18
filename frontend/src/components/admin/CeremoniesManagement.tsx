@@ -95,11 +95,13 @@ export default function CeremoniesManagement() {
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between gap-3 flex-wrap">
-        <h2 className="text-xl font-bold dark:text-white">مدیریت مراسمات</h2>
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <h2 className="text-lg sm:text-xl font-bold dark:text-white">مدیریت مراسمات</h2>
         <button onClick={openNew}
-          className="flex items-center gap-1.5 px-4 py-2.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm font-medium shadow-sm">
-          <Plus className="w-4 h-4" />رزرو جدید
+          className="flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-xs sm:text-sm font-medium shadow-sm">
+          <Plus className="w-4 h-4" />
+          <span className="hidden sm:inline">رزرو جدید</span>
+          <span className="sm:hidden">رزرو</span>
         </button>
       </div>
 

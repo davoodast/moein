@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BarChart3, Calendar, CreditCard, TrendingUp } from 'lucide-react';
+import { BarChart3, Calendar, CreditCard, TrendingUp, LayoutDashboard, Users, CalendarDays, Package } from 'lucide-react';
 import CeremoniesManagement from '../components/admin/CeremoniesManagement';
 import EmployeesManagement from '../components/admin/EmployeesManagement';
 import PlansManagement from '../components/admin/PlansManagement';
@@ -69,39 +69,50 @@ export default function AdminDashboardPage() {
     type: c.type, time: c.time, address: c.address, status: c.status,
   }));
 
-  const TABS = [{ k: 'dashboard', l: 'داشبورد' }, { k: 'ceremonies', l: 'مراسمات' }, { k: 'employees', l: 'کارمندان' }, { k: 'calendar', l: 'تقویم' }, { k: 'plans', l: 'پلن‌ها' }] as const;
+  const TABS = [
+    { k: 'dashboard', l: 'داشبورد', icon: LayoutDashboard },
+    { k: 'ceremonies', l: 'مراسمات', icon: Calendar },
+    { k: 'employees', l: 'کارمندان', icon: Users },
+    { k: 'calendar', l: 'تقویم', icon: CalendarDays },
+    { k: 'plans', l: 'پلن‌ها', icon: Package },
+  ] as const;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-2 sm:px-8 flex gap-0 sm:gap-1 overflow-x-auto scrollbar-hide">
-        {TABS.map(t => (
-          <button key={t.k} onClick={() => setActiveTab(t.k)}
-            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTab === t.k ? 'border-purple-600 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
-            {t.l}
-          </button>
-        ))}
+      <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-1 sm:px-8 flex gap-0 overflow-x-auto scrollbar-hide">
+        {TABS.map(t => {
+          const TabIcon = t.icon;
+          return (
+            <button key={t.k} onClick={() => setActiveTab(t.k)}
+              className={`flex items-center gap-1.5 px-3 sm:px-4 py-3 text-xs sm:text-sm font-medium border-b-2 transition-colors whitespace-nowrap flex-shrink-0 ${activeTab === t.k ? 'border-purple-600 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
+              <TabIcon className="w-4 h-4 sm:hidden" />
+              <span className="hidden sm:inline"><TabIcon className="w-4 h-4 inline ml-1.5" /></span>
+              {t.l}
+            </button>
+          );
+        })}
       </div>
 
-      <div className="p-4 sm:p-8">
+      <div className="p-3 sm:p-6 lg:p-8">
         {activeTab === 'dashboard' && (
-          <div className="space-y-8">
-            <div><h1 className="text-2xl font-bold text-gray-900 dark:text-white">داشبورد مدیریت</h1></div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="space-y-5 sm:space-y-8">
+            <div><h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">داشبورد مدیریت</h1></div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
               {stats.map(s => { const Icon = s.icon; return (
-                <div key={s.title} className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm">
-                  <div className={`w-10 h-10 rounded-lg ${s.color} flex items-center justify-center mb-3`}><Icon className={`w-5 h-5 ${s.tc}`} /></div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">{s.title}</p>
-                  <p className="text-lg font-bold text-gray-900 dark:text-white">{s.value}</p>
+                <div key={s.title} className="bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-5 shadow-sm">
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg ${s.color} flex items-center justify-center mb-2 sm:mb-3`}><Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${s.tc}`} /></div>
+                  <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-0.5 sm:mb-1">{s.title}</p>
+                  <p className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white">{s.value}</p>
                 </div>
               ); })}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
-                <h3 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><BarChart3 className="w-4 h-4 text-purple-500" />مراسم بر اساس نوع</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 shadow-sm">
+                <h3 className="font-bold text-sm sm:text-base text-gray-900 dark:text-white mb-3 sm:mb-4 flex items-center gap-2"><BarChart3 className="w-4 h-4 text-purple-500" />مراسم بر اساس نوع</h3>
                 {typeChart.length > 0 ? <BarChart data={typeChart} /> : <p className="text-gray-400 text-sm text-center py-8">بدون داده</p>}
               </div>
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
-                <h3 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><TrendingUp className="w-4 h-4 text-blue-500" />درآمد بر اساس ماه</h3>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 shadow-sm">
+                <h3 className="font-bold text-sm sm:text-base text-gray-900 dark:text-white mb-3 sm:mb-4 flex items-center gap-2"><TrendingUp className="w-4 h-4 text-blue-500" />درآمد بر اساس ماه</h3>
                 {monthChart.length > 0 ? <BarChart data={monthChart} /> : <p className="text-gray-400 text-sm text-center py-8">بدون داده</p>}
               </div>
             </div>
@@ -150,9 +161,9 @@ export default function AdminDashboardPage() {
         {activeTab === 'plans' && <PlansManagement />}
 
         {activeTab === 'calendar' && (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">تقویم مراسم‌ها</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">تقویم مراسم‌ها</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
               <div className="lg:col-span-2">
                 <JalaliCalendar events={calEvents} onDayClick={(d, evts) => setSelectedDay({ date: d, events: evts })} />
               </div>

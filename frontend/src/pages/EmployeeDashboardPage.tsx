@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar, FileText, Clock } from 'lucide-react';
+import { Calendar, FileText, Clock, LayoutDashboard, CalendarDays } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import JalaliCalendar, { type CeremonyEvent } from '../components/ui/JalaliCalendar';
 import apiClient from '../lib/apiClient';
@@ -36,42 +36,49 @@ export default function EmployeeDashboardPage() {
     type: t.type, time: t.time, address: t.address, status: t.status,
   }));
 
-  const TABS = [{ k: 'overview', l: 'خلاصه' }, { k: 'calendar', l: 'تقویم' }] as const;
+  const TABS = [
+    { k: 'overview', l: 'خلاصه', icon: LayoutDashboard },
+    { k: 'calendar', l: 'تقویم', icon: CalendarDays },
+  ] as const;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 sm:px-8 flex gap-0 sm:gap-1 overflow-x-auto scrollbar-hide">
-        {TABS.map(t => (
-          <button key={t.k} onClick={() => setActiveTab(t.k)}
-            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTab === t.k ? 'border-purple-600 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
-            {t.l}
-          </button>
-        ))}
+      <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-2 sm:px-8 flex gap-0 overflow-x-auto scrollbar-hide">
+        {TABS.map(t => {
+          const TabIcon = t.icon;
+          return (
+            <button key={t.k} onClick={() => setActiveTab(t.k)}
+              className={`flex items-center gap-1.5 px-4 py-3 text-xs sm:text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTab === t.k ? 'border-purple-600 text-purple-600 dark:text-purple-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
+              <TabIcon className="w-4 h-4" />
+              {t.l}
+            </button>
+          );
+        })}
       </div>
 
-      <div className="p-4 sm:p-8">
+      <div className="p-3 sm:p-6 lg:p-8">
         {activeTab === 'overview' && (
-          <div className="space-y-8">
+          <div className="space-y-5 sm:space-y-8">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">سلام {user?.username}!</h1>
-              <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">برنامه کاری شما</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">سلام {user?.username}!</h1>
+              <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mt-1">برنامه کاری شما</p>
             </div>
 
             <div className="grid grid-cols-3 gap-2 sm:gap-4">
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-5 shadow-sm">
-                <Calendar className="w-5 h-5 sm:w-7 sm:h-7 text-blue-500 mb-2 sm:mb-3" />
-                <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-0.5 sm:mb-1">پیش‌رو</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{upcoming.length}</p>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-2.5 sm:p-5 shadow-sm text-center sm:text-right">
+                <Calendar className="w-5 h-5 sm:w-7 sm:h-7 text-blue-500 mb-1.5 sm:mb-3 mx-auto sm:mx-0" />
+                <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-0.5">پیش‌رو</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">{upcoming.length}</p>
               </div>
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-5 shadow-sm">
-                <FileText className="w-5 h-5 sm:w-7 sm:h-7 text-green-500 mb-2 sm:mb-3" />
-                <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-0.5 sm:mb-1">تکمیل شده</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{done.length}</p>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-2.5 sm:p-5 shadow-sm text-center sm:text-right">
+                <FileText className="w-5 h-5 sm:w-7 sm:h-7 text-green-500 mb-1.5 sm:mb-3 mx-auto sm:mx-0" />
+                <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-0.5">تکمیل شده</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">{done.length}</p>
               </div>
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-5 shadow-sm">
-                <Clock className="w-5 h-5 sm:w-7 sm:h-7 text-purple-500 mb-2 sm:mb-3" />
-                <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-0.5 sm:mb-1">کل ساعات</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{totalHours}</p>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-2.5 sm:p-5 shadow-sm text-center sm:text-right">
+                <Clock className="w-5 h-5 sm:w-7 sm:h-7 text-purple-500 mb-1.5 sm:mb-3 mx-auto sm:mx-0" />
+                <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-0.5">کل ساعات</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">{totalHours}</p>
               </div>
             </div>
 
@@ -103,9 +110,9 @@ export default function EmployeeDashboardPage() {
         )}
 
         {activeTab === 'calendar' && (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">تقویم کاری من</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">تقویم کاری من</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
               <div className="lg:col-span-2">
                 <JalaliCalendar events={calEvents} employeeView onDayClick={(d, evts) => setSelectedDay({ date: d, events: evts })} />
               </div>

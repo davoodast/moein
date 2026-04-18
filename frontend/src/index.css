@@ -38,6 +38,19 @@ body {
   display: none;
 }
 
+/* Safe area for mobile bottom navigation */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Prevent unwanted horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 /* Dark Mode Defaults */
 .dark {
   color-scheme: dark;

@@ -11,7 +11,7 @@ export default function MainLayout() {
       <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
       <div className="flex h-[calc(100dvh-64px)]">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto pb-16 md:pb-0">
           <Outlet />
         </main>
       </div>

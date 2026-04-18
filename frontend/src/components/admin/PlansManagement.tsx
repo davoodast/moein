@@ -69,17 +69,17 @@ export default function PlansManagement() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="text-xl font-bold dark:text-white">مدیریت پلن‌ها</h2>
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <h2 className="text-lg sm:text-xl font-bold dark:text-white">مدیریت پلن‌ها</h2>
         <button onClick={openNew}
-          className="flex items-center gap-1.5 px-4 py-2.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm font-medium shadow-sm">
+          className="flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-xs sm:text-sm font-medium shadow-sm">
           <Plus className="w-4 h-4" />پلن جدید
         </button>
       </div>
 
       {/* Form */}
       {showForm && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-5 space-y-4">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-5 space-y-4">
           <h3 className="font-semibold dark:text-white">{editingId ? 'ویرایش پلن' : 'پلن جدید'}</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -154,12 +154,12 @@ export default function PlansManagement() {
           <button onClick={openNew} className="text-purple-600 text-sm hover:underline">اولین پلن را اضافه کنید</button>
         </div>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {plans.map(p => {
           let feats: string[] = [];
           try { feats = JSON.parse(p.features); } catch { feats = []; }
           return (
-            <div key={p.id} className={`bg-white dark:bg-gray-800 rounded-xl shadow-sm p-5 flex flex-col gap-3 border-t-4 ${p.is_active ? 'border-purple-500' : 'border-gray-300'}`}>
+            <div key={p.id} className={`bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4 sm:p-5 flex flex-col gap-2 sm:gap-3 border-t-4 ${p.is_active ? 'border-purple-500' : 'border-gray-300'}`}>
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <h3 className="font-semibold dark:text-white">{p.name}</h3>

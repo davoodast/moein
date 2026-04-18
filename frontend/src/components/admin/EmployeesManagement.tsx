@@ -108,34 +108,35 @@ export default function EmployeesManagement() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold dark:text-white">مدیریت کارمندان</h2>
+      <div className="flex justify-between items-center gap-2 flex-wrap">
+        <h2 className="text-lg sm:text-2xl font-bold dark:text-white">مدیریت کارمندان</h2>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+          className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-xs sm:text-sm font-medium"
         >
           <Plus className="w-4 h-4" />
-          افزودن کارمند جدید
+          <span className="hidden sm:inline">افزودن کارمند جدید</span>
+          <span className="sm:hidden">کارمند جدید</span>
         </button>
       </div>
 
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute right-3 top-3 w-5 h-5 text-gray-400" />
+        <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
         <input
           type="text"
           placeholder="جستجو..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full px-4 py-2 pr-10 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg"
+          className="w-full px-4 py-2.5 pr-10 border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/40"
         />
       </div>
 
       {/* Form */}
       {showForm && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 shadow-lg">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>

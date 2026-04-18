@@ -27,12 +27,12 @@ export default function Header({ onMenuClick }: HeaderProps) {
           >
             <Menu className="w-5 h-5" />
           </button>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">آتلیه معین</h1>
+          <h1 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white truncate">آتلیه معین</h1>
         </div>
 
         <div className="flex items-center gap-4">
           {user && (
-            <span className="text-sm text-gray-600 dark:text-gray-400">
+            <span className="hidden sm:inline text-sm text-gray-600 dark:text-gray-400">
               {user.username}
             </span>
           )}

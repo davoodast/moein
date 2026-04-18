@@ -74,10 +74,13 @@ export default function JalaliDatePicker({ value, onChange, placeholder = 'ان�
         value={value}
         onClick={() => setOpen(o => !o)}
         placeholder={placeholder}
-        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded cursor-pointer"
+        className="w-full px-3 py-2.5 border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500/40"
       />
       {open && (
-        <div className="absolute z-50 top-full mt-1 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-600 p-3 min-w-[280px]" style={{ direction: 'rtl' }}>
+        <>
+          {/* Mobile overlay */}
+          <div className="fixed inset-0 bg-black/30 z-40 sm:hidden" onClick={() => setOpen(false)} />
+          <div className="fixed inset-x-3 bottom-4 z-50 sm:absolute sm:inset-x-auto sm:bottom-auto sm:right-0 sm:top-full sm:mt-1 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-600 p-3 sm:min-w-[280px] sm:w-full max-w-sm mx-auto sm:mx-0" style={{ direction: 'rtl' }}>
           {/* Header */}
           <div className="flex items-center justify-between mb-3">
             <button onClick={prevMonth} className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
@@ -93,7 +96,7 @@ export default function JalaliDatePicker({ value, onChange, placeholder = 'ان�
           {/* Day headers */}
           <div className="grid grid-cols-7 mb-1">
             {DAYS_FA.map(d => (
-              <div key={d} className="text-center text-[11px] text-gray-400 py-1">{d}</div>
+              <div key={d} className="text-center text-[10px] sm:text-[11px] text-gray-400 py-1">{d}</div>
             ))}
           </div>
           {/* Days grid */}
@@ -107,7 +110,7 @@ export default function JalaliDatePicker({ value, onChange, placeholder = 'ان�
                 <button
                   key={d}
                   onClick={() => selectDay(d)}
-                  className={`w-8 h-8 mx-auto text-[13px] rounded-full transition-colors ${
+                  className={`w-8 h-8 sm:w-9 sm:h-9 mx-auto text-xs sm:text-[13px] rounded-full transition-colors ${
                     sel ? 'bg-purple-600 text-white font-medium' :
                     tod ? 'bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300' :
                     'hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200'
@@ -118,7 +121,8 @@ export default function JalaliDatePicker({ value, onChange, placeholder = 'ان�
               );
             })}
           </div>
-        </div>
+          </div>
+        </>
       )}
     </div>
   );
